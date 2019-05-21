@@ -1,24 +1,37 @@
 #!/bin/bash
-url="${1}"
-supportedTypes=('redd.it')
 
+url="${1}"
+
+kde=$( kdeconnect-cli -a | grep -oh "^[0-9]" )
+
+if [ ! $url ]; then
+    echo "Invalid arguments"
+    exit 1
+fi
+
+supportedTypes=('redd.it')
+isConnDev=true
 DATE=`date +%Y-%m-%d_%H-%M-%S`
 
-# Store client identity number to direct data.
-id=$(kdeconnect-cli -a --id-only)
-
 # check if user exists.
-if [ -z "$id" ]
-then
-    echo "No user connected"
-    exit 1
+if [  $kde = "0" ]; then
+    echo "No KDE user connected"
+    isConnDev=false
+    id=$( adb devices | grep -oh "^\S*[0-9]" )
+    if [ -z $id ]; then
+        echo "ADB device list is empty."
+        exit 1
+    fi
+    loc="/sdcard/Download"
+else
+    id=$( kdeconnect-cli -a --id-only ) # Store client identity number to direct data.
 fi
 
 
 path="/tmp/KDEConnEx/"
 name="kdeconn-$DATE"
 $(mkdir -p $path)
-fileType=$(echo $(basename $url) | sed "s/?.*//g;s/^.*\.//")
+fileType=$( echo $(basename $url) | sed "s/?.*//g;s/^.*\.//" )
 
 
 # resource identifier
@@ -47,13 +60,16 @@ function downloadContent(){
 
 # transfer to connected device
 function sendFile(){
-    # echo "Sending...."
-    $(kdeconnect-cli -d $id --share $file)
+    if [ "$isConnDev" = true ]; then
+        $( kdeconnect-cli -d $id --share $file )
+    else
+        $( adb push "$file" "$loc" )
+    fi
 }
 
 function start(){
     downloadContent
-    # sendFile
+    sendFile
 }
 
 start

@@ -1,4 +1,4 @@
-# KDE connect + External Application Button (Firefox Extension)
+# ( ADB | KDE connect ) + External Application Button {Firefox Extension}
 
 This is a shell script intended to make your life a bit easier.
 
@@ -10,11 +10,11 @@ Usually, you have to download the file -> Open the folder -> look for the file -
 
 
 
-# Installation
+# Installation 
 
 + Change the permission of the file `chmod +x dispatch`.
 
-+ Copy the `dispatch`file `/usr/local/bin/`
++ Copy the `dispatch` file `/usr/local/bin/`
 
 + Download **External Application Button** extension from firefox [https://addons.mozilla.org/en-US/firefox/addon/external-application/]()
 
@@ -26,6 +26,6 @@ Usually, you have to download the file -> Open the folder -> look for the file -
 
 + Select Image, Video, Audio Context inside Context Menus.
 
-+ That's it, make sure you are connected to your device, click on any image, gif, video.
++ That's it, make sure you are connected (either via KDEconnect or ADB) to your device, right click on any image, gif, video adn select the desired action.
 
 
