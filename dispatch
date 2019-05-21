@@ -2,6 +2,7 @@
 
 url="${1}"
 
+# connect to "KDE connect"
 kde=$( kdeconnect-cli -a | grep -oh "^[0-9]" )
 
 if [ ! $url ]; then
@@ -9,8 +10,12 @@ if [ ! $url ]; then
     exit 1
 fi
 
+# tested sites. 
 supportedTypes=('redd.it')
+
 isConnDev=true
+
+
 DATE=`date +%Y-%m-%d_%H-%M-%S`
 
 # check if user exists.
@@ -31,12 +36,18 @@ fi
 path="/tmp/KDEConnEx/"
 name="kdeconn-$DATE"
 $(mkdir -p $path)
+
+# extract file type from URL
 fileType=$( echo $(basename $url) | sed "s/?.*//g;s/^.*\.//" )
 
+if [ -z $fileType ]; then
+    fileType="png"
+fi
 
 # resource identifier
 kind=$( echo $url | grep ${supportedTypes[0]} )
 
+# Specific for REDDIT video downloads
 function redditGif(){
     if [ "$fileType" = "gif" ]; then
         fileType="mp4"
@@ -67,6 +78,7 @@ function sendFile(){
     fi
 }
 
+# final block
 function start(){
     downloadContent
     sendFile
