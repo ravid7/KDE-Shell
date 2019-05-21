@@ -20,7 +20,9 @@ Usually, you have to download the file -> Open the folder -> look for the file -
 
 + After Installation, go to the settings page of this AddOn.
 
-+ Create a new application with **Executable name** as dispatch and Arguments as *[HREF]* 
++ Create a new application with **Executable name** as dispatch and Arguments as *[HREF]*
+
++ Also check "Surround the arguments with quote characters".  
 
 + Select Image, Video, Audio Context inside Context Menus.
 

@@ -1,6 +1,5 @@
 #!/bin/bash
 url="${1}"
-
 supportedTypes=('redd.it')
 
 DATE=`date +%Y-%m-%d_%H-%M-%S`
@@ -43,7 +42,7 @@ fi
 # arguments (Device-ID, target URL)
 function downloadContent(){
     file="$path$name.$fileType"
-    $( wget -qO $file - "https://external-preview.redd.it/ESt8FJHjA1Czi-QvKojxPD6K3-G7zKafvr9fWp6noKg.gif?format=mp4&s=1d8847dfc8d0e0329fbdb981672972ba888334d9" )
+    $( wget -qO $file - $url )
 }
 
 # transfer to connected device
@@ -54,7 +53,7 @@ function sendFile(){
 
 function start(){
     downloadContent
-    sendFile
+    # sendFile
 }
 
 start
