@@ -1,6 +1,9 @@
 #!/bin/bash
+url="${1}"
 
-supportedTypes=('preview.redd.it')
+supportedTypes=('redd.it')
+
+DATE=`date +%Y-%m-%d_%H-%M-%S`
 
 # Store client identity number to direct data.
 id=$(kdeconnect-cli -a --id-only)
@@ -12,51 +15,49 @@ then
     exit 1
 fi
 
-url=${1}
-fileType=$(echo $url | grep gif)
-external=$(echo $url | grep external-preview)
 
+path="/tmp/KDEConnEx/"
+name="kdeconn-$DATE"
+$(mkdir -p $path)
+fileType=$(echo $(basename $url) | sed "s/?.*//g;s/^.*\.//")
+
+
+# resource identifier
 kind=$( echo $url | grep ${supportedTypes[0]} )
-# takes argument url
-function redditModifier(){
-    if [ ! -z "$external" ]
-        then
-            url=$(echo $url | sed "s/?.*//g;s/external-preview/i/")
-        else
-            url=$(echo $url | sed "s/?.*//g;s/preview/i/")
+
+function redditGif(){
+    if [ "$fileType" = "gif" ]; then
+        fileType="mp4"
     fi
-    filename="/tmp/$(basename $url)"
 }
+
+# save file
+# function saveFile(){
+#     #
+# }
+
+if [ ! -z "$kind" ]; then
+    redditGif
+fi
 
 # arguments (Device-ID, target URL)
 function downloadContent(){
-    $( wget -qO $filename - $url )
+    file="$path$name.$fileType"
+    $( wget -qO $file - "https://external-preview.redd.it/ESt8FJHjA1Czi-QvKojxPD6K3-G7zKafvr9fWp6noKg.gif?format=mp4&s=1d8847dfc8d0e0329fbdb981672972ba888334d9" )
 }
 
 # transfer to connected device
 function sendFile(){
-    if [ ! -z "$fileType" ]
-        then
-            modified=$(echo $filename | sed 's/gif/mp4/')
-            $( mv $original $modified )
-    fi
     # echo "Sending...."
     $(kdeconnect-cli -d $id --share $filename)
 }
 
+function start(){
+    downloadContent
+    # sendFile
+}
 
-filename="/tmp/$(basename $url)"
-
-if [ ! -z "$kind" ]
-then
-    redditModifier
-fi
-
-downloadContent
-
-sendFile
-
-
+start
 
 #wait $(rm -rf $filename)
 
