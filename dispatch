@@ -1,0 +1,62 @@
+#!/bin/bash
+
+supportedTypes=('preview.redd.it')
+
+# Store client identity number to direct data.
+id=$(kdeconnect-cli -a --id-only)
+
+# check if user exists.
+if [ -z "$id" ]
+then
+    echo "No user connected"
+    exit 1
+fi
+
+url=${1}
+fileType=$(echo $url | grep gif)
+external=$(echo $url | grep external-preview)
+
+kind=$( echo $url | grep ${supportedTypes[0]} )
+# takes argument url
+function redditModifier(){
+    if [ ! -z "$external" ]
+        then
+            url=$(echo $url | sed "s/?.*//g;s/external-preview/i/")
+        else
+            url=$(echo $url | sed "s/?.*//g;s/preview/i/")
+    fi
+    filename="/tmp/$(basename $url)"
+}
+
+# arguments (Device-ID, target URL)
+function downloadContent(){
+    $( wget -qO $filename - $url )
+}
+
+# transfer to connected device
+function sendFile(){
+    if [ ! -z "$fileType" ]
+        then
+            modified=$(echo $filename | sed 's/gif/mp4/')
+            $( mv $original $modified )
+    fi
+    # echo "Sending...."
+    $(kdeconnect-cli -d $id --share $filename)
+}
+
+
+filename="/tmp/$(basename $url)"
+
+if [ ! -z "$kind" ]
+then
+    redditModifier
+fi
+
+downloadContent
+
+sendFile
+
+
+
+#wait $(rm -rf $filename)
+
