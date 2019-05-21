@@ -49,7 +49,7 @@ function downloadContent(){
 # transfer to connected device
 function sendFile(){
     # echo "Sending...."
-    $(kdeconnect-cli -d $id --share $filename)
+    $(kdeconnect-cli -d $id --share $file)
 }
 
 function start(){
