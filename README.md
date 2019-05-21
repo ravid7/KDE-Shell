@@ -1,4 +1,4 @@
-# A simple automation script for *Nix & Mac 
+# SSHFS BASED automation script for *Nix & Mac 
 
 ## ( ADB | KDE connect ) + External Application Button {Firefox Extension}
 
