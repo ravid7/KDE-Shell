@@ -54,7 +54,7 @@ function sendFile(){
 
 function start(){
     downloadContent
-    # sendFile
+    sendFile
 }
 
 start
