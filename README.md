@@ -1,4 +1,6 @@
-# ( ADB | KDE connect ) + External Application Button {Firefox Extension}
+# A simple automation script for *Nix & Mac 
+
+## ( ADB | KDE connect ) + External Application Button {Firefox Extension}
 
 This is a shell script intended to make your life a bit easier.
 
