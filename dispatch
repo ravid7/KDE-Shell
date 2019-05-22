@@ -35,7 +35,7 @@ fi
 
 path="/tmp/KDEConnEx/"
 name="kdeconn-$DATE"
-$(mkdir -p $path)
+mkdir -p $path
 
 # extract file type from URL
 fileType=$( echo $(basename $url) | sed "s/?.*//g;s/^.*\.//" )
@@ -66,15 +66,16 @@ fi
 # arguments (Device-ID, target URL)
 function downloadContent(){
     file="$path$name.$fileType"
-    $( wget -qO $file - $url )
+    rm -f $file
+    wget -qO $file - $url
 }
 
 # transfer to connected device
 function sendFile(){
     if [ "$isConnDev" = true ]; then
-        $( kdeconnect-cli -d $id --share $file )
+        kdeconnect-cli -d $id --share $file
     else
-        $( adb push "$file" "$loc" )
+        adb push "$file" "$loc"
     fi
 }
 

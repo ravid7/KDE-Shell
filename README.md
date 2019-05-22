@@ -1,5 +1,9 @@
 # SSHFS based automation script for *Nix & Mac 
 
+[![License](http://img.shields.io/:license-LGPLv2.1-blue.svg)](https://github.com/ravid7/KDE-Shell/blob/master/LICENSE)
+[![Version](http://img.shields.io/:version-0.1.0-green.svg)](https://github.com/ravid7/KDE-Shell)
+[![Build Status](https://travis-ci.org/ravid7/KDE-Shell.svg?branch=master)](https://github.com/ravid7/KDE-Shell)
+
 ## ( ADB | KDE connect ) + External Application Button {Firefox Extension}
 
 This is a shell script intended to make your life a bit easier.
