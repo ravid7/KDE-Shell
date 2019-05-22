@@ -40,7 +40,7 @@ $(mkdir -p $path)
 # extract file type from URL
 fileType=$( echo $(basename $url) | sed "s/?.*//g;s/^.*\.//" )
 
-if [ -z $fileType ]; then
+if [ ! -z "$fileType" ]; then
     fileType="png"
 fi
 
@@ -81,7 +81,7 @@ function sendFile(){
 # final block
 function start(){
     downloadContent
-    sendFile
+    # sendFile
 }
 
 start
