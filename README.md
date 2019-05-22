@@ -28,6 +28,6 @@ Usually, you have to download the file -> Open the folder -> look for the file -
 
 + Select Image, Video, Audio Context inside Context Menus.
 
-+ That's it, make sure you are connected (either via KDEconnect or ADB) to your device, right click on any image, gif, video adn select the desired action.
++ That's it, make sure you are connected (either via KDEconnect or ADB) to your device, right click on any image, gif, video and select the desired action.
 
 
