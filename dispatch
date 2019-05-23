@@ -19,33 +19,33 @@ isConnDev=true
 DATE=`date +%Y-%m-%d_%H-%M-%S`
 
 # check if user exists.
-if [  $kde = "0" ]; then
+if [  "$kde" = "0" ]; then
     echo "No KDE user connected"
     isConnDev=false
     id=$( adb devices | grep -oh "^\S*[0-9]" )
-    if [ -z $id ]; then
+    if [ -z "$id" ]; then
         echo "ADB device list is empty."
         exit 1
     fi
     loc="/sdcard/Download"
 else
-    id=$( kdeconnect-cli -a --id-only ) # Store client identity number to direct data.
+    id="$( kdeconnect-cli -a --id-only )" # Store client identity number to direct data.
 fi
 
 
 path="/tmp/KDEConnEx/"
 name="kdeconn-$DATE"
-mkdir -p $path
+mkdir -p "$path"
 
 # extract file type from URL
-fileType=$( echo $(basename $url) | sed "s/?.*//g;s/^.*\.//" )
+fileType=$( echo "$(basename "$url")" | sed "s/?.*//g;s/^.*\.//" )
 
 if [ ! -z "$fileType" ]; then
     fileType="png"
 fi
 
 # resource identifier
-kind=$( echo $url | grep ${supportedTypes[0]} )
+kind=$( echo "$url" | grep "${supportedTypes[0]}" )
 
 # Specific for REDDIT video downloads
 function redditGif(){
@@ -66,14 +66,14 @@ fi
 # arguments (Device-ID, target URL)
 function downloadContent(){
     file="$path$name.$fileType"
-    rm -f $file
-    wget -qO $file - $url
+    rm -f "$file"
+    wget -qO "$file" - "$url"
 }
 
 # transfer to connected device
 function sendFile(){
     if [ "$isConnDev" = true ]; then
-        kdeconnect-cli -d $id --share $file
+        kdeconnect-cli -d "$id" --share "$file"
     else
         adb push "$file" "$loc"
     fi
