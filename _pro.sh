@@ -40,8 +40,8 @@ fi
 
 if [[ -e "$kdeProtoDir" ]]; then
     kdeProtoFile="$kdeProtoDir/$protocol.protocol"
-    rm -f $kdeProtoFile
-    cat > $kdeProtoFile << EOF
+    rm -f "$kdeProtoFile"
+    cat > "$kdeProtoFile" << EOF
 [Protocol]
 exec=$handler "%u"
 protocol=$protocol
